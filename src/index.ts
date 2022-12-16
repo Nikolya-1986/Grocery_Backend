@@ -3,6 +3,9 @@ import express from 'express';
 import cors from 'cors';
 import { createConnection } from 'typeorm';
 
+import { routes } from './routes/routes';
+
+
 createConnection().then(() => {
     const app = express();
 
@@ -20,13 +23,6 @@ createConnection().then(() => {
         next(); 
     });
 
-    //for 404
-    app.use((req,res,next)=>{
-        const err = new Error('Not Found');
-        err.name='404';
-        next(err);
-    });
-    
     //error handler
     app.use((err: { message: any; status: any; },req: any,res: { status: (arg0: any) => void; json: (arg0: { error: { message: any; }; }) => void; },next: any) => {
             console.log(err.message);
@@ -35,6 +31,8 @@ createConnection().then(() => {
             message:err.message
         }});
     });
+
+    routes(app);
 
     app.set('port', process.env.PORT || 8008);
     app.listen(app.get('port'), () => {

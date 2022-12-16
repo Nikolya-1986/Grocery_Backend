@@ -6,7 +6,7 @@
     "password": "",
     "database": "node_grocery",
     "entities": [
-        "src/entity/*.ts"
+        "/src/entities/user.entity.ts"
     ],
     "logging": false,
     "synchronize": true
